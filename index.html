@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>SHUTBOX</title>
+    </head>
+    <body>
+    	<center id="numbers" style="cursor: pointer"></center>
+		<center>
+			<div id="dice" style="cursor:pointer"></div>
+		</center>
+		<template id="oneDie">
+	    	<svg width="80" height="80">
+	        	<rect width="80" height="80" style="fill:rgba(255,0,0,0.8);stroke-width:3;stroke:rgb(0,0,0)" />
+	    		<circle cx="40" cy="40" r="8" stroke="black" stroke-width="1" fill="white" />
+	    	</svg>
+	    </template>
+	    <template id="twoDie">
+	    	<svg width="80" height="80">
+	        	<rect width="80" height="80" style="fill:rgba(255,0,0,0.8);stroke-width:3;stroke:rgb(0,0,0)" />
+	    		<circle cx="60" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    	</svg>
+	    </template>
+	    <template id="threeDie">
+	    	<svg width="80" height="80">
+	        	<rect width="80" height="80" style="fill:rgba(255,0,0,0.8);stroke-width:3;stroke:rgb(0,0,0)" />
+	    		<circle cx="60" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="40" cy="40" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    	</svg>
+	    </template>
+	    <template id="fourDie">
+	    	<svg width="80" height="80">
+	        	<rect width="100" height="80" style="fill:rgba(255,0,0,0.8);stroke-width:3;stroke:rgb(0,0,0)" />
+	    		<circle cx="60" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="60" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    	</svg>
+	    </template>
+	    <template id="fiveDie">
+	    	<svg width="80" height="80">
+	        	<rect width="80" height="80" style="fill:rgba(255,0,0,0.8);stroke-width:3;stroke:rgb(0,0,0)" />
+	    		<circle cx="60" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="60" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="40" cy="40" r="8" stroke="black" stroke-width="1" fill="white" />
+	    	</svg>
+	    </template>
+	    <template id="sixDie">
+	    	<svg width="80" height="80">
+	        	<rect width="80" height="80" style="fill:rgba(255,0,0,0.8);stroke-width:3;stroke:rgb(0,0,0)" />
+	    		<circle cx="60" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="60" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="20" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="40" cy="20" r="8" stroke="black" stroke-width="1" fill="white" />
+	    		<circle cx="40" cy="60" r="8" stroke="black" stroke-width="1" fill="white" />
+	    	</svg>
+    	</template>
+    </body>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+    	function rolldice(count){
+    		$("#dice svg").remove();
+    		for(var i = 0; i < count; i++){
+    			var r = Math.ceil(Math.random() * 6);
+    			if (r == 1) $("#dice").append($("#oneDie").html());
+    			if (r == 2) $("#dice").append($("#twoDie").html());
+    			if (r == 3) $("#dice").append($("#threeDie").html());
+    			if (r == 4) $("#dice").append($("#fourDie").html());
+    			if (r == 5) $("#dice").append($("#fiveDie").html());
+    			if (r == 6) $("#dice").append($("#sixDie").html());
+    		}
+    		//$("#results").append($("#one").html());	
+    	}
+    	$("#dice").click(function(){
+    		rolldice(2);
+    	});
+    	rolldice(2);
+    	
+    	$("#numbers svg").click(function(){
+    		console.log("svg test")
+    		var on = $(this).attr("on");
+    		if (on == "true") {
+    			$(this).attr("on", false);
+    			$(this).attr("style", "opacity:0.2");
+    		} else {
+    			$(this).attr("on", true);
+    			$(this).attr("style", "opacity:1.0");
+    		}
+    	});
+    	
+    	$("#numbers svg").click(function(){
+    		console.log("numbers test")
+    	});
+    	
+    	function createBlocks(number){
+    		var height = window.innerHeight;
+    		var width = window.innerWidth;
+    		var blockWidth = width / (number);
+    		var blockHeight = height / 2;
+    		
+    		for (var i = 1; i <= number; i++){
+	    		var svg = '<svg width="' + (blockWidth - 2) + '" height="' + blockHeight + '" on="true" style="opacity:1.0">'; 
+	    		svg += '<rect width="' + blockWidth + '" height="' + blockHeight + '" style="fill:rgb(0,0,0);stroke-width:3;stroke:rgb(250,0,0);opacity:1.0" />';
+	    		svg += '<text x="10" y="80" style="fill: #FFFFFF; stroke: none; font-size: 60px;">' + i + '</text>';
+			  	svg += '</svg>';
+			  	$("#numbers").append(svg);
+		  	}
+    	}
+    	createBlocks(9)
+    	
+    </script>
+</html>
